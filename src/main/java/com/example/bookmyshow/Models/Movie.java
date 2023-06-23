@@ -5,12 +5,14 @@ import com.example.bookmyshow.Enums.Language;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Movies")
 @Data
-public class Movies {
+public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -30,4 +32,7 @@ public class Movies {
 
     @Enumerated(EnumType.STRING)
     private Language language;
+
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    private List<Show> showList =new ArrayList<>();
 }
