@@ -1,6 +1,7 @@
 package com.example.bookmyshow.Controllers;
 
 import com.example.bookmyshow.Dtos.RequestDto.TheaterEntryDto;
+import com.example.bookmyshow.Dtos.RequestDto.TheaterSeatsEntryDto;
 import com.example.bookmyshow.Services.TheaterService;
 import org.hibernate.Remove;
 import org.hibernate.query.sql.spi.ParameterOccurrence;
@@ -21,4 +22,11 @@ public class TheaterController {
     public String add(@RequestBody TheaterEntryDto theaterEntryDto){
         return theaterService.addTheater(theaterEntryDto);
     }
+
+    @PostMapping("/addTheaterSeats")
+    public String addTheaterSeats(@RequestBody TheaterSeatsEntryDto theaterSeatsEntryDto){
+
+        return theaterService.addTheaterSeats(theaterSeatsEntryDto);
+    }
+
 }

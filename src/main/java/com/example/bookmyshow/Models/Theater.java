@@ -22,6 +22,7 @@ public class Theater {
 
     private String name;
 
+    @Column(unique = true)
     private String location;
 
     @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)

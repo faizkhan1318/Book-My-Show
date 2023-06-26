@@ -5,20 +5,20 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "theater_seat")
+@Table(name = "show_seat")
 @Data
-public class TheaterSeat {
-
+public class ShowSeat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    private String seatNo; //1A, 1B, 2A
-
-    @Enumerated(EnumType.STRING)
+    private String seatNo;
     private SeatType seatType;
+    private int price;
+    private boolean available;
+    private boolean isFoodAttached;
 
     @ManyToOne
     @JoinColumn
-    private Theater theater;
+    private Show show;
+
 }
