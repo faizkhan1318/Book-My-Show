@@ -12,6 +12,8 @@ public class ShowSeat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String seatNo;
+
+    @Enumerated(EnumType.STRING)
     private SeatType seatType;
     private int price;
     private boolean available;

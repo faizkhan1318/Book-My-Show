@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShowController {
 
     @Autowired
-    private ShowService showService;
+    ShowService showService;
 
     @PostMapping("/add")
     public String addShow(@RequestBody AddShowDto addShowDto){

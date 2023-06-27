@@ -20,7 +20,7 @@ import java.util.Optional;
 @Service
 public class ShowService {
     @Autowired
-    private ShowRepository showRepository;
+    ShowRepository showRepository;
     @Autowired
     private TheaterRepository theaterRepository;
     @Autowired

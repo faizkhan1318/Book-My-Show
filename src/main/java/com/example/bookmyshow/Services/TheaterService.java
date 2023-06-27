@@ -16,7 +16,7 @@ import java.util.List;
 public class TheaterService {
 
     @Autowired
-    private TheaterRepository theaterRepository;
+    TheaterRepository theaterRepository;
 
     public String addTheater(TheaterEntryDto theaterEntryDto){
         //entity that saves into DB
