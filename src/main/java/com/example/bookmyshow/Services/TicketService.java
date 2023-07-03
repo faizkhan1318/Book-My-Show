@@ -44,32 +44,32 @@ public class TicketService {
         if(isValid==false){
             throw new Exception("Requested seats are not available");
         }
-        Ticket ticket = new Ticket();
+        Ticket tickett = new Ticket();
 
         //calculate the total price of requested seats
         int totalPrice = calculatePrice(show, ticketRequestDto.getRequestedSeats());
-        ticket.setTotalTicketPrice(totalPrice);
+        tickett.setTotalTicketPrice(totalPrice);
 
         //convert the list of seats to string
         String bookedSeats = convertToString(ticketRequestDto.getRequestedSeats());
-        ticket.setBookedSeats(bookedSeats);
+        tickett.setBookedSeats(bookedSeats);
 
         // do bidirectional mapping
         User user = userOptional.get();
 
-        ticket.setUser(user);
-        ticket.setShow(show);
+        tickett.setUser(user);
+        tickett.setShow(show);
 
-        ticket = ticketRepository.save(ticket);
+        tickett = ticketRepository.save(tickett);
 
-        user.getTicketList().add(ticket);
+        user.getTicketList().add(tickett);
         userRepository.save(user);
 
         //saving the relevant repository
-        show.getTicketList().add(ticket);
+        show.getTicketList().add(tickett);
         showRepository.save(show);
 
-        return createTicketResponseDto(show, ticket);
+        return createTicketResponseDto(show, tickett);
     }
 
     private TicketResponseDto createTicketResponseDto(Show show, Ticket ticket) {
@@ -80,6 +80,7 @@ public class TicketService {
                 .movieName(show.getMovie().getMovieName())
                 .showDate(show.getDate())
                 .showTime(show.getTime())
+                .totalPrice(ticket.getTotalTicketPrice())
                 .build();
         return ticketResponseDto;
     }
@@ -90,8 +91,9 @@ public class TicketService {
 
         for(ShowSeat showSeat : showSeatList){
             String seatNo = showSeat.getSeatNo();
-            if(requestedSeats.contains(seatNo) && showSeat.isAvailable()==false){
-                return false;
+            if(requestedSeats.contains(seatNo)){
+                if(showSeat.isAvailable()==false)
+                    return false;
             }
         }
         return true;
@@ -101,14 +103,16 @@ public class TicketService {
         List<ShowSeat> showSeatList = show.getShowSeatList();
         for(ShowSeat showSeat : showSeatList){
             if(requestedSeats.contains(showSeat.getSeatNo())){
-                price = price+showSeat.getPrice();
+                price = price + showSeat.getPrice();
+                System.out.println(price);
                 //this seat is not available
                 showSeat.setAvailable(false);
             }
         }
+        System.out.println(price);
         return price;
     }
-    private String convertToString(List<String> requestedSeats) {
+    String convertToString(List<String> requestedSeats) {
         String result = "";
         for(String seatNo : requestedSeats){
             result = result + seatNo + ", ";

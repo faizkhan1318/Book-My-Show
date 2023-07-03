@@ -20,7 +20,7 @@ import java.util.Optional;
 @Service
 public class ShowService {
     @Autowired
-    ShowRepository showRepository;
+    private ShowRepository showRepository;
     @Autowired
     private TheaterRepository theaterRepository;
     @Autowired
@@ -49,9 +49,10 @@ public class ShowService {
 
         //adding the bidirectional relation
         movie.getShowList().add(show);
-        theater.getShowList().add(show);
-
         movieRepository.save(movie);
+
+
+        theater.getShowList().add(show);
         theaterRepository.save(theater);
 
         return "Show has been Added and ShowId is" + show.getId();

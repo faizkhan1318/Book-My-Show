@@ -41,7 +41,7 @@ public class TheaterService {
         char ch='A';
         // for classic seats
         for(int count=1;count<=noOfClassicSeats; count++){
-            String seatNo = counter + " ";
+            String seatNo = counter + "";
             seatNo = seatNo + ch; // 1A 1B 1C
             ch++; //increase the character in column
 
@@ -60,7 +60,7 @@ public class TheaterService {
 
         // this is for premium seats
         for(int count=1; count<=noOfPremiumSeats; count++){
-            String seatNo = counter + " ";
+            String seatNo = counter + "";
             seatNo = seatNo + ch; // 1A 1B 1C
             ch++; //increase the character in column
 
