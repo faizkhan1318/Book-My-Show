@@ -2,6 +2,7 @@ package com.example.bookmyshow.Services;
 
 import com.example.bookmyshow.Dtos.RequestDto.AddShowDto;
 import com.example.bookmyshow.Dtos.RequestDto.ShowSeatsDto;
+import com.example.bookmyshow.Dtos.RequestDto.ShowTimingsDto;
 import com.example.bookmyshow.Enums.SeatType;
 import com.example.bookmyshow.Exception.MovieNotFound;
 import com.example.bookmyshow.Exception.ShowNotFound;
@@ -14,6 +15,8 @@ import com.example.bookmyshow.Transformers.ShowTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,5 +92,17 @@ public class ShowService {
         showRepository.save(show);
 
         return "Show seats has been successfully added";
+    }
+
+    public String movieHavingMostShows() {
+        Integer movieId = showRepository.getMostShowsMovies();
+        return movieRepository.findById(movieId).get().getMovieName();
+    }
+
+    public List<Time> showTimingsOnDate(ShowTimingsDto showTimingsDto) {
+        Date date = showTimingsDto.getDate();
+        Integer theaterId = showTimingsDto.getTheaterId();
+        Integer movieId = showTimingsDto.getMovieId();
+        return showRepository.getShowTimingsOnDate(date, theaterId, movieId);
     }
 }
