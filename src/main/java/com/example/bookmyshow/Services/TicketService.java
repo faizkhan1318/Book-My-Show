@@ -12,6 +12,8 @@ import com.example.bookmyshow.Repository.ShowRepository;
 import com.example.bookmyshow.Repository.TicketRepository;
 import com.example.bookmyshow.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +28,8 @@ public class TicketService {
     private UserRepository userRepository;
     @Autowired
     private TicketRepository ticketRepository;
+    @Autowired
+    private JavaMailSender emailSender;
 
     public TicketResponseDto bookTicket(TicketRequestDto ticketRequestDto) throws NoUserFoundException, ShowNotFound, Exception {
         int userId = ticketRequestDto.getUserId();
@@ -68,6 +72,22 @@ public class TicketService {
         //saving the relevant repository
         show.getTicketList().add(tickett);
         showRepository.save(show);
+
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+
+        String body="Hii! "+user.getName()+"\n"+
+                "You have successfully booked a ticket. Please find the following details of your ticket \n"+
+                "Booked seats "+bookedSeats+"\n"+
+                "Movie name "+show.getMovie().getMovieName()+"\n"+
+                "Show date is "+show.getDate()+"\n"+
+                "Show time is "+show.getTime()+"\n"+
+                "Enjoy the show!!"+"\n"+
+                "Thank You";
+        simpleMailMessage.setSubject("Ticket Confirmation Mail");
+        simpleMailMessage.setFrom("");
+        simpleMailMessage.setText(body);
+        simpleMailMessage.setTo(user.getEmail());
+        emailSender.send(simpleMailMessage);
 
         return createTicketResponseDto(show, tickett);
     }
