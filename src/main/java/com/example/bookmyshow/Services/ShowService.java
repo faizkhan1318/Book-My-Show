@@ -35,7 +35,7 @@ public class ShowService {
         if(movieOptional.isEmpty()){
             throw new MovieNotFound("Movie Not Found");
         }
-        Optional<Theater> theaterOptional = theaterRepository.findById(showDto.getMovieId());
+        Optional<Theater> theaterOptional = theaterRepository.findById(showDto.getTheaterId());
         if(theaterOptional.isEmpty()){
             throw new TheaterNotFound("Theater Not Found");
         }
